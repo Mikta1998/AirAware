@@ -1,61 +1,91 @@
 import streamlit as st
-import pandas as pd
 import plotly.graph_objects as go
 import folium
 from streamlit_folium import st_folium
-from waqi import fetch_aqi  # Function to get live AQI data via API
+from api import fetch_aqi
+from features.features import aqi_advice, aqi_color
 
-# Air Quality Index categories and colors
-def aqi_color(aqi):
-    if aqi <= 50: return "Good", "green"
-    elif aqi <= 100: return "Moderate", "yellow"
-    elif aqi <= 150: return "Unhealthy for Sensitive Groups", "orange"
-    elif aqi <= 200: return "Unhealthy", "red"
-    elif aqi <= 300: return "Very Unhealthy", "purple"
-    return "Hazardous", "maroon"
+# Favoriten-Session-State initialisieren
+if "favorites" not in st.session_state:
+    st.session_state.favorites = {}
 
-# Gives advice based on Air Quality Index level
-def aqi_advice(aqi):
-    if aqi <= 50:
-        return "Air is clean. Great day to go outside!"
-    elif aqi <= 100:
-        return "Air is acceptable. Sensitive groups can still go out, but take it easy."
-    elif aqi <= 150:
-        return "Unhealthy for sensitive people (asthma, elderly). Limit outdoor activities."
-    elif aqi <= 200:
-        return "Unhealthy. Everyone should reduce prolonged outdoor exertion."
-    elif aqi <= 300:
-        return "Very unhealthy. Stay indoors with windows closed if possible."
-    return "Hazardous. Avoid all outdoor activity. Use air purifiers if available."
-
-# Main search function
 def show_search():
+    # CSS nur auf dieser Seite aktiv
+    st.markdown("""
+    <style>
+    div[data-testid="stHorizontalBlock"] > div:nth-child(2) button {
+        margin-top: 0.65em !important;
+        border: 2px solid #FFD600 !important;
+        background: transparent !important;
+        color: #FFD600 !important;
+        font-size: 1.6em !important;
+        border-radius: 6px !important;
+        font-weight: bold;
+        height: 2.2em !important;
+        width: 2.2em !important;
+        line-height: 1;
+        padding: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    div[data-testid="stHorizontalBlock"] > div:nth-child(2) button:hover {
+        background: #23272b !important;
+    }
+    </style>
+    """, unsafe_allow_html=True)
+
     st.subheader("Check Air Quality by City")
 
-    # Text input for the user to type a city name
-    city = st.text_input("Enter a city name")
+    col_search, col_fav = st.columns([5, 1])
+    with col_search:
+        city = st.text_input("Enter a city name", key="city_search")
 
-    # Start with default values
+    show_fav_btn = (
+        city
+        and "current_result" in st.session_state
+        and city.lower() not in [c.lower() for c in st.session_state.favorites.keys()]
+    )
+
+    with col_fav:
+        if show_fav_btn:
+            if st.button("☆", key="fav_btn", help="Save as favourite"):
+                st.session_state.favorites[city] = st.session_state.current_result
+                st.success(f"{city} saved in favourite!")
+
+    # Initialwerte
     aqi = None
     label = None
     color = None
     advice = None
-    lat, lon = 20, 0  # Default map center
+    lat, lon = 20, 0  # Standardwerte für den Fall, dass keine Daten abgerufen werden
 
-    # If a city is entered, fetch real data
     if city:
         with st.spinner("Fetching air quality data..."):
-            data = fetch_aqi(city)
-        if data:
-            aqi = data["aqi"]
-            label, color = aqi_color(aqi)
-            advice = aqi_advice(aqi)
-            lat = data.get("lat", lat)
-            lon = data.get("lon", lon)
+            # Die Antwort von fetch_aqi() ist hier die gesamte API-Antwort
+            response = fetch_aqi(city)  
+
+        if response and isinstance(response, dict):
+            # Hier prüfen wir, ob die Antwort ein Dictionary ist und ob die nötigen Felder vorhanden sind
+            aqi = response.get("aqi", None)
+            label, color = aqi_color(aqi) if aqi is not None else (None, None)
+            advice = aqi_advice(aqi) if aqi is not None else None
+            lat = response.get("lat", lat)  # Fallback auf den Standardwert
+            lon = response.get("lon", lon)  # Fallback auf den Standardwert
+            st.session_state.current_result = {
+                "aqi": aqi,
+                "label": label,
+                "color": color,
+                "advice": advice,
+                "lat": lat,
+                "lon": lon
+            }
         else:
             st.error("Could not fetch data for this city.")
+            st.session_state.current_result = None
+    else:
+        st.session_state.current_result = None
 
-    # Show AQI and label only if data exists
     if aqi is not None and label:
         st.markdown(f"**AQI:** {aqi}  \n"
                     f"**Air Quality:** <span style='color:{color}; font-weight:bold'>{label}</span>",
@@ -64,7 +94,6 @@ def show_search():
     else:
         st.markdown("**AQI:**  \n**Air Quality:**")
 
-    # Gauge + legend (always shown)
     col1, col2 = st.columns([3, 1], gap="large")
     with col1:
         fig = go.Figure(go.Indicator(
@@ -93,7 +122,6 @@ def show_search():
         fig.update_layout(paper_bgcolor="rgba(0,0,0,0)", font={"color": "white"})
         st.plotly_chart(fig, use_container_width=True)
 
-    # AQI color guide legend
     with col2:
         st.markdown("""
         <div style='padding-top: 1rem;'>
@@ -109,7 +137,6 @@ def show_search():
         </div>
         """, unsafe_allow_html=True)
 
-    # Map section
     st.subheader("Location on Interactive Map")
     m = folium.Map(location=[lat, lon], zoom_start=4 if city else 2, tiles="OpenStreetMap")
     if city and aqi is not None:
@@ -120,3 +147,5 @@ def show_search():
             icon=folium.Icon(color="red" if aqi > 100 else "green")
         ).add_to(m)
     st_folium(m, width=800, height=600)
+
+

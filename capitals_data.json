@@ -1,0 +1,836 @@
+{
+    "Afghanistan": {
+        "capital": "Kabul",
+        "aqi": 193,
+        "lat": 34.554382,
+        "lon": 69.2046,
+        "timestamp": "2025-04-24T00:36:35.498428"
+    },
+    "Algeria": {
+        "capital": "Algiers",
+        "aqi": 102,
+        "lat": 36.7558,
+        "lon": 3.039114,
+        "timestamp": "2025-04-24T00:35:24.570866"
+    },
+    "Argentina": {
+        "capital": "Buenos Aires",
+        "aqi": "-",
+        "lat": -34.5995674,
+        "lon": -58.3915767,
+        "timestamp": "2025-04-24T00:34:16.420737"
+    },
+    "Armenia": {
+        "capital": "Yerevan",
+        "aqi": 44,
+        "lat": 40.16515,
+        "lon": 44.48171,
+        "timestamp": "2025-04-24T00:35:09.302735"
+    },
+    "Australia": {
+        "capital": "Canberra",
+        "aqi": 1,
+        "lat": -35.285307,
+        "lon": 149.131579,
+        "timestamp": "2025-04-24T00:37:12.612186"
+    },
+    "Azerbaijan": {
+        "capital": "Baku",
+        "aqi": 61,
+        "lat": 40.386993,
+        "lon": 49.842945,
+        "timestamp": "2025-04-24T00:35:10.453684"
+    },
+    "Bangladesh": {
+        "capital": "Dhaka",
+        "aqi": 152,
+        "lat": 23.796373,
+        "lon": 90.424614,
+        "timestamp": "2025-04-24T00:36:39.821004"
+    },
+    "Belgium": {
+        "capital": "Brussels",
+        "aqi": 25,
+        "lat": 50.8503396,
+        "lon": 4.3517103,
+        "timestamp": "2025-04-24T00:34:42.376904"
+    },
+    "Brazil": {
+        "capital": "Brasilia",
+        "aqi": 28,
+        "lat": -22.772321379,
+        "lon": -47.154842866,
+        "timestamp": "2025-04-24T00:34:17.524399"
+    },
+    "Bulgaria": {
+        "capital": "Sofia",
+        "aqi": 37,
+        "lat": 42.7325,
+        "lon": 23.298611,
+        "timestamp": "2025-04-24T00:34:41.256554"
+    },
+    "Canada": {
+        "capital": "Ottawa",
+        "aqi": 33,
+        "lat": 45.4215296,
+        "lon": -75.6971931,
+        "timestamp": "2025-04-24T00:33:52.624076"
+    },
+    "Chile": {
+        "capital": "Santiago",
+        "aqi": 50,
+        "lat": -33.464142,
+        "lon": -70.660797,
+        "timestamp": "2025-04-24T00:34:18.584975"
+    },
+    "China": {
+        "capital": "Beijing",
+        "aqi": 31,
+        "lat": 39.954592,
+        "lon": 116.468117,
+        "timestamp": "2025-04-24T00:36:23.462829"
+    },
+    "Croatia": {
+        "capital": "Zagreb",
+        "aqi": 59,
+        "lat": 45.800338888889,
+        "lon": 15.974072222222,
+        "timestamp": "2025-04-24T00:34:56.254718"
+    },
+    "Cyprus": {
+        "capital": "Nicosia",
+        "aqi": 41,
+        "lat": 35.1520595,
+        "lon": 33.3476924,
+        "timestamp": "2025-04-24T00:34:57.345006"
+    },
+    "Czech Republic": {
+        "capital": "Prague",
+        "aqi": 30,
+        "lat": 50.094238,
+        "lon": 14.442049,
+        "timestamp": "2025-04-24T00:34:36.953084"
+    },
+    "Denmark": {
+        "capital": "Copenhagen",
+        "aqi": 26,
+        "lat": 55.6750137,
+        "lon": 12.5693995,
+        "timestamp": "2025-04-24T00:34:49.643335"
+    },
+    "Egypt": {
+        "capital": "Cairo",
+        "aqi": 57,
+        "lat": 30.0412457,
+        "lon": 31.2332942,
+        "timestamp": "2025-04-24T00:35:21.286276"
+    },
+    "Estonia": {
+        "capital": "Tallinn",
+        "aqi": 21,
+        "lat": 59.43107,
+        "lon": 24.760317,
+        "timestamp": "2025-04-24T00:35:02.710693"
+    },
+    "Finland": {
+        "capital": "Helsinki",
+        "aqi": 14,
+        "lat": 60.1733244,
+        "lon": 24.9410248,
+        "timestamp": "2025-04-24T00:34:48.547357"
+    },
+    "France": {
+        "capital": "Paris",
+        "aqi": 47,
+        "lat": 48.856614,
+        "lon": 2.3522219,
+        "timestamp": "2025-04-24T00:34:30.407304"
+    },
+    "Georgia": {
+        "capital": "Tbilisi",
+        "aqi": 59,
+        "lat": 41.708829,
+        "lon": 44.799661,
+        "timestamp": "2025-04-24T00:35:11.524646"
+    },
+    "Germany": {
+        "capital": "Berlin",
+        "aqi": 50,
+        "lat": 52.5200066,
+        "lon": 13.404954,
+        "timestamp": "2025-04-24T00:34:29.306189"
+    },
+    "Greece": {
+        "capital": "Athens",
+        "aqi": 46,
+        "lat": 37.988028,
+        "lon": 23.727628,
+        "timestamp": "2025-04-24T00:34:40.200870"
+    },
+    "Indonesia": {
+        "capital": "Jakarta",
+        "aqi": 62,
+        "lat": -6.155,
+        "lon": 106.846,
+        "timestamp": "2025-04-24T00:36:28.970662"
+    },
+    "Iran": {
+        "capital": "Tehran",
+        "aqi": 68,
+        "lat": 35.686719,
+        "lon": 51.422419,
+        "timestamp": "2025-04-24T00:36:36.622199"
+    },
+    "Iraq": {
+        "capital": "Baghdad",
+        "aqi": 95,
+        "lat": 33.3128,
+        "lon": 44.3615,
+        "timestamp": "2025-04-24T00:36:37.717469"
+    },
+    "Ireland": {
+        "capital": "Dublin",
+        "aqi": 29,
+        "lat": 53.345053,
+        "lon": -6.254344,
+        "timestamp": "2025-04-24T00:34:44.590268"
+    },
+    "Israel": {
+        "capital": "Jerusalem",
+        "aqi": 98,
+        "lat": 31.768319,
+        "lon": 35.21371,
+        "timestamp": "2025-04-24T00:36:48.571945"
+    },
+    "Italy": {
+        "capital": "Rome",
+        "aqi": 34,
+        "lat": 41.8932669,
+        "lon": 12.4753855,
+        "timestamp": "2025-04-24T00:34:33.712501"
+    },
+    "Japan": {
+        "capital": "Tokyo",
+        "aqi": 20,
+        "lat": 35.6414629,
+        "lon": 139.6981712,
+        "timestamp": "2025-04-24T00:36:24.563539"
+    },
+    "Jordan": {
+        "capital": "Amman",
+        "aqi": 33,
+        "lat": 31.93544,
+        "lon": 35.94458,
+        "timestamp": "2025-04-24T00:36:49.688219"
+    },
+    "Kazakhstan": {
+        "capital": "Astana",
+        "aqi": 14,
+        "lat": 51.125286,
+        "lon": 71.46722,
+        "timestamp": "2025-04-24T00:36:43.063897"
+    },
+    "Kenya": {
+        "capital": "Nairobi",
+        "aqi": 5,
+        "lat": -1.23437,
+        "lon": 36.81732,
+        "timestamp": "2025-04-24T00:35:22.367712"
+    },
+    "Kyrgyzstan": {
+        "capital": "Bishkek",
+        "aqi": 80,
+        "lat": 42.827625,
+        "lon": 74.58384,
+        "timestamp": "2025-04-24T00:36:44.148062"
+    },
+    "Kuwait": {
+        "capital": "Kuwait City",
+        "aqi": 68,
+        "lat": 29.35941452,
+        "lon": 47.99742241,
+        "timestamp": "2025-04-24T00:36:55.139825"
+    },
+    "Lithuania": {
+        "capital": "Vilnius",
+        "aqi": 11,
+        "lat": 54.7117424,
+        "lon": 25.2974345,
+        "timestamp": "2025-04-24T00:35:07.103889"
+    },
+    "Malaysia": {
+        "capital": "Kuala Lumpur",
+        "aqi": 52,
+        "lat": 3.139003,
+        "lon": 101.686855,
+        "timestamp": "2025-04-24T00:36:31.187514"
+    },
+    "Malta": {
+        "capital": "Valletta",
+        "aqi": 41,
+        "lat": 35.897778,
+        "lon": 14.489444,
+        "timestamp": "2025-04-24T00:35:14.785980"
+    },
+    "Mexico": {
+        "capital": "Mexico City",
+        "aqi": 124,
+        "lat": 19.42461,
+        "lon": -99.119594,
+        "timestamp": "2025-04-24T00:33:53.722866"
+    },
+    "Moldova": {
+        "capital": "Chi\u0219in\u0103u",
+        "aqi": 53,
+        "lat": 47.02156,
+        "lon": 28.81938,
+        "timestamp": "2025-04-24T00:35:00.606046"
+    },
+    "Montenegro": {
+        "capital": "Podgorica",
+        "aqi": 21,
+        "lat": 42.448087,
+        "lon": 19.240889,
+        "timestamp": "2025-04-24T00:35:16.985176"
+    },
+    "Netherlands": {
+        "capital": "Amsterdam",
+        "aqi": 71,
+        "lat": 52.3702157,
+        "lon": 4.8951679,
+        "timestamp": "2025-04-24T00:34:43.458487"
+    },
+    "Norway": {
+        "capital": "Oslo",
+        "aqi": 11,
+        "lat": 59.914051,
+        "lon": 10.735978,
+        "timestamp": "2025-04-24T00:35:03.829449"
+    },
+    "Pakistan": {
+        "capital": "Islamabad",
+        "aqi": 42,
+        "lat": 33.7235,
+        "lon": 73.11822,
+        "timestamp": "2025-04-24T00:36:34.382361"
+    },
+    "Panama": {
+        "capital": "Panama City",
+        "aqi": 24,
+        "lat": 30.130555555556,
+        "lon": -85.731388888889,
+        "timestamp": "2025-04-24T00:33:58.119319"
+    },
+    "Peru": {
+        "capital": "Lima",
+        "aqi": 54,
+        "lat": -12.07054,
+        "lon": -77.04322,
+        "timestamp": "2025-04-24T00:34:19.689365"
+    },
+    "Philippines": {
+        "capital": "Manila",
+        "aqi": "-",
+        "lat": 14.5995124,
+        "lon": 120.9842195,
+        "timestamp": "2025-04-24T00:36:30.108478"
+    },
+    "Poland": {
+        "capital": "Warsaw",
+        "aqi": 41,
+        "lat": 52.225171,
+        "lon": 21.014783,
+        "timestamp": "2025-04-24T00:34:35.901604"
+    },
+    "Portugal": {
+        "capital": "Lisbon",
+        "aqi": 31,
+        "lat": 38.748611111111,
+        "lon": -9.1488888888889,
+        "timestamp": "2025-04-24T00:35:04.959794"
+    },
+    "Romania": {
+        "capital": "Bucharest",
+        "aqi": 26,
+        "lat": 44.435029,
+        "lon": 26.098609,
+        "timestamp": "2025-04-24T00:34:39.130012"
+    },
+    "Russia": {
+        "capital": "Moscow",
+        "aqi": 46,
+        "lat": 55.759354,
+        "lon": 37.595584,
+        "timestamp": "2025-04-24T00:36:22.414786"
+    },
+    "Saudi Arabia": {
+        "capital": "Riyadh",
+        "aqi": 33,
+        "lat": 24.6775,
+        "lon": 46.720556,
+        "timestamp": "2025-04-24T00:36:38.788090"
+    },
+    "Sweden": {
+        "capital": "Stockholm",
+        "aqi": 0,
+        "lat": 59.3408269502832,
+        "lon": 18.0582536812784,
+        "timestamp": "2025-04-24T00:34:47.513552"
+    },
+    "Switzerland": {
+        "capital": "Bern",
+        "aqi": 25,
+        "lat": 46.951111111111,
+        "lon": 7.4408333333333,
+        "timestamp": "2025-04-24T00:34:46.456895"
+    },
+    "South Korea": {
+        "capital": "Seoul",
+        "aqi": 76,
+        "lat": 37.566535,
+        "lon": 126.9779692,
+        "timestamp": "2025-04-24T00:36:25.625877"
+    },
+    "Spain": {
+        "capital": "Madrid",
+        "aqi": 50,
+        "lat": 40.4167754,
+        "lon": -3.7037902,
+        "timestamp": "2025-04-24T00:34:32.630248"
+    },
+    "Sri Lanka": {
+        "capital": "Colombo",
+        "aqi": 82,
+        "lat": 6.913047,
+        "lon": 79.84807,
+        "timestamp": "2025-04-24T00:37:10.450677"
+    },
+    "Tajikistan": {
+        "capital": "Dushanbe",
+        "aqi": 156,
+        "lat": 38.55767,
+        "lon": 68.77592,
+        "timestamp": "2025-04-24T00:36:45.206405"
+    },
+    "Thailand": {
+        "capital": "Bangkok",
+        "aqi": 26,
+        "lat": 13.7563309,
+        "lon": 100.5017651,
+        "timestamp": "2025-04-24T00:36:27.837927"
+    },
+    "Turkey": {
+        "capital": "Ankara",
+        "aqi": 62,
+        "lat": 39.92706513272927,
+        "lon": 32.86001400920846,
+        "timestamp": "2025-04-24T00:36:59.484901"
+    },
+    "Turkmenistan": {
+        "capital": "Ashgabat",
+        "aqi": 57,
+        "lat": 37.9415,
+        "lon": 58.3879,
+        "timestamp": "2025-04-24T00:36:46.326631"
+    },
+    "Ukraine": {
+        "capital": "Kyiv",
+        "aqi": 5,
+        "lat": 50.444,
+        "lon": 30.54,
+        "timestamp": "2025-04-24T00:34:50.717684"
+    },
+    "United Arab Emirates": {
+        "capital": "Abu Dhabi",
+        "aqi": 95,
+        "lat": 24.484653749994,
+        "lon": 54.364735330707,
+        "timestamp": "2025-04-24T00:36:54.050717"
+    },
+    "Vietnam": {
+        "capital": "Hanoi",
+        "aqi": 66,
+        "lat": 21.035584,
+        "lon": 105.852771,
+        "timestamp": "2025-04-24T00:36:26.730044"
+    },
+    "last_updated_date": "2025-04-24",
+    "United States": {
+        "capital": "Washington D.C.",
+        "aqi": 26,
+        "lat": 38.8577,
+        "lon": -77.05922,
+        "timestamp": "2025-04-24T00:33:51.508272"
+    },
+    "Belize": {
+        "capital": "Belmopan",
+        "aqi": "-",
+        "lat": 17.256124,
+        "lon": -88.77387,
+        "timestamp": "2025-04-24T00:33:54.824054"
+    },
+    "Costa Rica": {
+        "capital": "San Jos\u00e9",
+        "aqi": 68,
+        "lat": 37.34849,
+        "lon": -121.89494,
+        "timestamp": "2025-04-24T00:33:55.933603"
+    },
+    "Guatemala": {
+        "capital": "Guatemala City",
+        "aqi": 61,
+        "lat": 14.6069387,
+        "lon": -90.5169696,
+        "timestamp": "2025-04-24T00:33:57.036810"
+    },
+    "El Salvador": {
+        "capital": "San Salvador",
+        "aqi": "-",
+        "lat": 13.70630556,
+        "lon": -89.20011667,
+        "timestamp": "2025-04-24T00:33:59.168651"
+    },
+    "Barbados": {
+        "capital": "Bridgetown",
+        "aqi": 36,
+        "lat": 45.496640911,
+        "lon": -122.60287735,
+        "timestamp": "2025-04-24T00:34:03.498352"
+    },
+    "Jamaica": {
+        "capital": "Kingston",
+        "aqi": 34,
+        "lat": 44.219722,
+        "lon": -76.521111,
+        "timestamp": "2025-04-24T00:34:06.597371"
+    },
+    "Saint Vincent and the Grenadines": {
+        "capital": "Kingstown",
+        "aqi": 32,
+        "lat": 53.285833000178,
+        "lon": -6.1319440004234,
+        "timestamp": "2025-04-24T00:34:12.008036"
+    },
+    "Trinidad and Tobago": {
+        "capital": "Port of Spain",
+        "aqi": 40,
+        "lat": 10.6425559,
+        "lon": -61.4940554,
+        "timestamp": "2025-04-24T00:34:14.207132"
+    },
+    "Antigua and Barbuda": {
+        "capital": "St. John's",
+        "aqi": 14,
+        "lat": 47.56038,
+        "lon": -52.71147,
+        "timestamp": "2025-04-24T00:34:15.303952"
+    },
+    "Ecuador": {
+        "capital": "Quito",
+        "aqi": 33,
+        "lat": -0.221393,
+        "lon": -78.514005,
+        "timestamp": "2025-04-24T00:34:22.920252"
+    },
+    "Colombia": {
+        "capital": "Bogot\u00e1",
+        "aqi": 59,
+        "lat": 4.5725,
+        "lon": -74.0836,
+        "timestamp": "2025-04-24T00:34:25.025278"
+    },
+    "Guyana": {
+        "capital": "Georgetown",
+        "aqi": 53,
+        "lat": 5.384388,
+        "lon": 100.3896169,
+        "timestamp": "2025-04-24T00:34:28.241227"
+    },
+    "United Kingdom": {
+        "capital": "London",
+        "aqi": 25,
+        "lat": 51.5073509,
+        "lon": -0.1277583,
+        "timestamp": "2025-04-24T00:34:31.534477"
+    },
+    "Austria": {
+        "capital": "Vienna",
+        "aqi": 38,
+        "lat": 48.2167394444444,
+        "lon": 16.3809180555556,
+        "timestamp": "2025-04-24T00:34:34.770234"
+    },
+    "Hungary": {
+        "capital": "Budapest",
+        "aqi": 50,
+        "lat": 47.508605,
+        "lon": 19.02764,
+        "timestamp": "2025-04-24T00:34:38.015096"
+    },
+    "Andorra": {
+        "capital": "Andorra la Vella",
+        "aqi": 16,
+        "lat": 42.509694,
+        "lon": 1.539138,
+        "timestamp": "2025-04-24T00:34:52.842911"
+    },
+    "Bosnia and Herzegovina": {
+        "capital": "Sarajevo",
+        "aqi": 55,
+        "lat": 43.848324,
+        "lon": 18.363396,
+        "timestamp": "2025-04-24T00:34:55.155126"
+    },
+    "Kosovo": {
+        "capital": "Pristina",
+        "aqi": 18,
+        "lat": 42.659656,
+        "lon": 21.157309,
+        "timestamp": "2025-04-24T00:34:58.390303"
+    },
+    "Serbia": {
+        "capital": "Belgrade",
+        "aqi": 66,
+        "lat": 44.794262,
+        "lon": 20.463173,
+        "timestamp": "2025-04-24T00:34:59.486454"
+    },
+    "North Macedonia": {
+        "capital": "Skopje",
+        "aqi": 58,
+        "lat": 41.99249998,
+        "lon": 21.42361109,
+        "timestamp": "2025-04-24T00:35:01.637335"
+    },
+    "Iceland": {
+        "capital": "Reykjav\u00edk",
+        "aqi": 0,
+        "lat": 64.13,
+        "lon": -21.875,
+        "timestamp": "2025-04-24T00:35:08.236890"
+    },
+    "Slovenia": {
+        "capital": "Ljubljana",
+        "aqi": 57,
+        "lat": 46.037791,
+        "lon": 14.494001,
+        "timestamp": "2025-04-24T00:35:19.127179"
+    },
+    "Slovakia": {
+        "capital": "Bratislava",
+        "aqi": 50,
+        "lat": 48.1448688,
+        "lon": 17.1130846,
+        "timestamp": "2025-04-24T00:35:20.220682"
+    },
+    "South Africa": {
+        "capital": "Pretoria",
+        "aqi": 58,
+        "lat": -25.740247,
+        "lon": 28.170315,
+        "timestamp": "2025-04-24T00:35:23.448768"
+    },
+    "Burkina Faso": {
+        "capital": "Ouagadougou",
+        "aqi": 153,
+        "lat": 12.304907,
+        "lon": -1.497184,
+        "timestamp": "2025-04-24T00:35:28.816192"
+    },
+    "Chad": {
+        "capital": "N'Djamena",
+        "aqi": 144,
+        "lat": 12.1348,
+        "lon": 15.0557,
+        "timestamp": "2025-04-24T00:35:33.195567"
+    },
+    "Democratic Republic of the Congo": {
+        "capital": "Kinshasa",
+        "aqi": 93,
+        "lat": -4.300578,
+        "lon": 15.313658,
+        "timestamp": "2025-04-24T00:35:34.310251"
+    },
+    "Ethiopia": {
+        "capital": "Addis Ababa",
+        "aqi": 74,
+        "lat": 9.058498,
+        "lon": 38.761642,
+        "timestamp": "2025-04-24T00:35:38.232867"
+    },
+    "Ghana": {
+        "capital": "Accra",
+        "aqi": 95,
+        "lat": 5.580642,
+        "lon": -0.170724,
+        "timestamp": "2025-04-24T00:35:40.456801"
+    },
+    "Nigeria": {
+        "capital": "Abuja",
+        "aqi": 160,
+        "lat": 9.0416479110718,
+        "lon": 7.4773740768433,
+        "timestamp": "2025-04-24T00:35:41.497009"
+    },
+    "Sudan": {
+        "capital": "Khartoum",
+        "aqi": 149,
+        "lat": 15.5007,
+        "lon": 32.5599,
+        "timestamp": "2025-04-24T00:35:45.764450"
+    },
+    "Uganda": {
+        "capital": "Kampala",
+        "aqi": 177,
+        "lat": 0.300225,
+        "lon": 32.591553,
+        "timestamp": "2025-04-24T00:35:51.061547"
+    },
+    "Rwanda": {
+        "capital": "Kigali",
+        "aqi": 120,
+        "lat": -1.936231,
+        "lon": 30.077951,
+        "timestamp": "2025-04-24T00:35:53.235330"
+    },
+    "Madagascar": {
+        "capital": "Antananarivo",
+        "aqi": 34,
+        "lat": -18.908479690552,
+        "lon": 47.537509918213,
+        "timestamp": "2025-04-24T00:35:59.783627"
+    },
+    "Mali": {
+        "capital": "Bamako",
+        "aqi": 97,
+        "lat": 12.632524,
+        "lon": -8.036911,
+        "timestamp": "2025-04-24T00:36:00.911106"
+    },
+    "Togo": {
+        "capital": "Lom\u00e9",
+        "aqi": 80,
+        "lat": 6.185167,
+        "lon": 1.214166,
+        "timestamp": "2025-04-24T00:36:03.059004"
+    },
+    "Comoros": {
+        "capital": "Moroni",
+        "aqi": "-",
+        "lat": -34.635582,
+        "lon": -58.5518647,
+        "timestamp": "2025-04-24T00:36:07.359579"
+    },
+    "Gabon": {
+        "capital": "Libreville",
+        "aqi": 61,
+        "lat": 0.3902,
+        "lon": 9.44436,
+        "timestamp": "2025-04-24T00:36:08.418263"
+    },
+    "Guinea": {
+        "capital": "Conakry",
+        "aqi": 72,
+        "lat": 9.5951,
+        "lon": -13.6364,
+        "timestamp": "2025-04-24T00:36:09.506758"
+    },
+    "Mauritius": {
+        "capital": "Port Louis",
+        "aqi": 51,
+        "lat": 11.1745536,
+        "lon": -60.7600744,
+        "timestamp": "2025-04-24T00:36:11.660290"
+    },
+    "Seychelles": {
+        "capital": "Victoria",
+        "aqi": 16,
+        "lat": 48.441942,
+        "lon": -123.363165,
+        "timestamp": "2025-04-24T00:36:13.870056"
+    },
+    "Singapore": {
+        "capital": "Singapore",
+        "aqi": 55,
+        "lat": 1.296183,
+        "lon": 103.846181,
+        "timestamp": "2025-04-24T00:36:32.237740"
+    },
+    "India": {
+        "capital": "New Delhi",
+        "aqi": 240,
+        "lat": 28.612498,
+        "lon": 77.237388,
+        "timestamp": "2025-04-24T00:36:33.322874"
+    },
+    "Cambodia": {
+        "capital": "Phnom Penh",
+        "aqi": "-",
+        "lat": 11.516002,
+        "lon": 104.905362,
+        "timestamp": "2025-04-24T00:36:40.935942"
+    },
+    "Uzbekistan": {
+        "capital": "Tashkent",
+        "aqi": 31,
+        "lat": 41.31086,
+        "lon": 69.24074,
+        "timestamp": "2025-04-24T00:36:47.467348"
+    },
+    "Mongolia": {
+        "capital": "Ulaanbaatar",
+        "aqi": 50,
+        "lat": 47.894281,
+        "lon": 106.882475,
+        "timestamp": "2025-04-24T00:36:57.290937"
+    },
+    "Laos": {
+        "capital": "Vientiane",
+        "aqi": "-",
+        "lat": 17.963142,
+        "lon": 102.6122046,
+        "timestamp": "2025-04-24T00:37:00.580003"
+    },
+    "Taiwan": {
+        "capital": "Taipei",
+        "aqi": 40,
+        "lat": 25.062361,
+        "lon": 121.526528,
+        "timestamp": "2025-04-24T00:37:01.670932"
+    },
+    "Bahrain": {
+        "capital": "Manama",
+        "aqi": 70,
+        "lat": 26.204697,
+        "lon": 50.57083,
+        "timestamp": "2025-04-24T00:37:02.763332"
+    },
+    "Brunei": {
+        "capital": "Bandar Seri Begawan",
+        "aqi": 16,
+        "lat": 4.9311206,
+        "lon": 114.9516869,
+        "timestamp": "2025-04-24T00:37:04.969862"
+    },
+    "Timor-Leste": {
+        "capital": "Dili",
+        "aqi": 240,
+        "lat": 28.612498,
+        "lon": 77.237388,
+        "timestamp": "2025-04-24T00:37:11.522755"
+    },
+    "New Zealand": {
+        "capital": "Wellington",
+        "aqi": "-",
+        "lat": -41.29361375,
+        "lon": 174.77193174,
+        "timestamp": "2025-04-24T00:37:13.750216"
+    },
+    "Fiji": {
+        "capital": "Suva",
+        "aqi": 17,
+        "lat": 36.03392,
+        "lon": 138.1074268,
+        "timestamp": "2025-04-24T00:37:15.956583"
+    }
+}

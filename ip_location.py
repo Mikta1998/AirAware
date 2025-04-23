@@ -3,42 +3,25 @@ import requests
 import plotly.graph_objects as go
 import folium
 from streamlit_folium import st_folium
-from waqi import fetch_aqi  # function to get air quality data from WAQI API
+from api import fetch_aqi  # function to get air quality data from WAQI API
+from features.features import aqi_advice, aqi_color
 
-# This function assigns a color and label based on AQI value
-def aqi_color(aqi):
-    if aqi <= 50: return "Good", "green"
-    elif aqi <= 100: return "Moderate", "yellow"
-    elif aqi <= 150: return "Unhealthy for Sensitive Groups", "orange"
-    elif aqi <= 200: return "Unhealthy", "red"
-    elif aqi <= 300: return "Very Unhealthy", "purple"
-    return "Hazardous", "maroon"
 
-# This gives health advice depending on the AQI value
-def aqi_advice(aqi):
-    if aqi <= 50:
-        return "Air is clean. Great day to go outside!"
-    elif aqi <= 100:
-        return "Air is acceptable. Sensitive groups can still go out, but take it easy."
-    elif aqi <= 150:
-        return "Unhealthy for sensitive people. Limit outdoor activities."
-    elif aqi <= 200:
-        return "Unhealthy. Everyone should reduce prolonged outdoor exertion."
-    elif aqi <= 300:
-        return "Very unhealthy. Stay indoors if possible."
-    return "Hazardous. Avoid all outdoor activity."
-
-# This function tries to detect the user's city based on their IP address
 @st.cache_data
 def detect_city():
+    '''
+    This function tries to detect the user's city based on their IP address
+    '''
     try:
         info = requests.get("https://ipinfo.io", timeout=3).json()  # call IP info API
         return info.get("city")  # extract city name
     except:
         return None  # return nothing if the API fails
 
-# This is the main function that shows the AQI based on user's location
 def show_ip_location():
+    '''
+    This is the main function that shows the AQI based on user's location.
+    '''
     st.subheader("📍 Check by My Location (Auto-detected)")
 
     city = detect_city()  # Get the city name based on IP
