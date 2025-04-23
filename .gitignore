@@ -1,0 +1,27 @@
+# Bytecode
+__pycache__/
+*.py[cod]
+
+# Virtual environments
+.venv/
+env/
+venv/
+
+# Editor configs
+.vscode/
+.idea/
+
+# OS Files
+.DS_Store
+Thumbs.db
+
+# Environment Variables
+.env
+
+# Streamlit stuff
+.streamlit/secrets.toml
+
+Include/
+Scripts/
+Lib/
+pyvenv.cfg
