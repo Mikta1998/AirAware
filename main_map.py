@@ -8,16 +8,33 @@ from capitals_data import get_capitals
 from api import dummy_data, fetch_and_store_aqi_for_all_countries, save_dummy_data
 
 def get_aqi_color(aqi):
+    '''
+    Returns a hex color code corresponding to the AQI level.
+    
+    Parameters:
+    - aqi (int or None): Air Quality Index value (AQI)
+
+    Returns:
+    - str: Hex color code representing AQI category:
+        - AQI 0-50 (good) = green (#4caf50)
+        - AQI 51-100 (moderate) = yellow (#ffeb3b)
+        - AQI >100 (bad) = red (#f44336)
+        - AQI None (No Data) = gray (#cccccc)
+    '''
+
     if aqi is None:
-        return "#cccccc"
+        return "#cccccc" # gray=no data
     elif aqi <= 50:
-        return "#4caf50"
+        return "#4caf50" # green=good
     elif aqi <= 100:
-        return "#ffeb3b"
+        return "#ffeb3b" # yellow=moderate
     else:
-        return "#f44336"
+        return "#f44336" # red=bad
 
 def render_centered_table(df, aqi_col=True):
+    '''
+    Renders a pandas DataFrame with centered column styles.
+    '''
     
     styles = [
         dict(selector="th.col0", props=[("text-align", "center")]),
@@ -29,10 +46,18 @@ def render_centered_table(df, aqi_col=True):
     styled = df.style.set_table_styles(styles).hide(axis="index")
     st.markdown(styled.to_html(), unsafe_allow_html=True)
 
-def show_main_map():
+def show_worldmap():
+    '''
+    Displays a worldmap with countries coloured by the AQI value of their capital.
+    '''
+    # title and description
     st.markdown("<h4 style='margin-bottom: 0.5em;'>🌐 Worldmap: Air pollution by countries & capitals</h4>", unsafe_allow_html=True)
     
-    # Legende
+    st.write("This world map shows the capitals of each country. " \
+    "Each country is coloured green (good), yellow (moderate), or red (bad) according to the AQI value of the capital. " \
+    "The colour change is defined by the AQI spectrum.")
+
+    # colour legend
     st.markdown("""
     <div style='display: flex; justify-content: center; gap: 24px; margin-bottom: 16px;'>
       <div style='display: flex; align-items: center; gap: 6px;'>
@@ -53,18 +78,21 @@ def show_main_map():
     </div>
     """, unsafe_allow_html=True)
 
+    # loading GeoJSON with land boarders
     geojson_url = "https://raw.githubusercontent.com/johan/world.geo.json/master/countries.geo.json"
     countries_geojson = requests.get(geojson_url).json()
 
+    # loading capitals data
     capitals = get_capitals()
 
+    # loading recent AQI data out of capitals_data.json or runs without data 
     try:
         with open("capitals_data.json", "r") as f:
             real_aqi_data = json.load(f)
     except (FileNotFoundError, json.JSONDecodeError):
         real_aqi_data = {}
 
-    # adding AQI values to every city
+    # adding AQI values and timestamp to every city
     for c in capitals:
         country = c["country"]
         country_data = real_aqi_data.get(country, {})
@@ -75,6 +103,7 @@ def show_main_map():
         c["aqi"] = int(aqi_value) if aqi_value is not None and aqi_value != "-" else None
         c["timestamp"] = timestamp
 
+    # maps the country with colour by it's capital AQI
     country_aqi_map = {c["country"]: c["aqi"] for c in capitals}
 
     def style_function(feature):
@@ -89,19 +118,25 @@ def show_main_map():
             "fillColor": get_aqi_color(aqi)
         }
 
-    # builds map
+    # defining borders for the map
+    min_lat, max_lat = -60, 75    # without arctis and antarctis
+    min_lon, max_lon = -180, 180  # whole world in its width
+
+    # calculating center of the map borders
+    center_lat = (min_lat + max_lat) / 2
+    center_lon = 0
+
+    # start zoom (default)
+    zoom_level = 2
+
+    # map configurations
     m = folium.Map(
-        location=[30, 10],
-        zoom_start=1.5,
-        min_zoom=1.5,
-        max_zoom=1.5,
+        location=[center_lat, center_lon],
+        zoom_start=zoom_level,
+        min_zoom=zoom_level,
+        max_zoom=8,           
         tiles="CartoDB positron",
-        dragging=False,
-        scrollWheelZoom=False,
-        doubleClickZoom=False,
-        boxZoom=False,
-        touchZoom=False,
-        zoom_control=False
+        max_bounds=True
     )
 
     folium.GeoJson(
@@ -162,7 +197,7 @@ def show_main_map():
     color: #fff !important;
     border-bottom: 2px solid #4caf50 !important;
 }
-/* Selectbox geschlossen */
+/* Selectbox closed */
 div[data-baseweb="select"] > div {
     background-color: #23272b !important;
     color: #eee !important;
@@ -177,7 +212,7 @@ div[role="option"], li[role="option"], div[data-baseweb="option"] {
     background-color: #23272b !important;
     color: #eee !important;
 }
-/* Hover-Effekt */
+/* Hover effect */
 div[role="option"]:hover {
     background-color: #343a40 !important;
     color: #fff !important;
@@ -187,7 +222,7 @@ div[data-baseweb="select"] .css-1n6sfyn-option[aria-selected="true"] {
     background-color: #343a40 !important;
     color: #fff !important;
 }
-/* Label der Selectbox */
+/* Label of the Selectbox */
 label {
     color: #eee !important;
 }
@@ -213,30 +248,37 @@ label {
 </style>
 """, unsafe_allow_html=True)
     
+    # --- Comparison Tool ---
+    # DataFrame with capitals data
     df = pd.DataFrame(capitals)
 
-    # --- Comparison Tool ---
+    # Comparison tool of two capitals
     st.markdown("## 🌆 City Comparison Tool")
-
     city_options = df[df["aqi"].notnull()]["city"].unique()
     city1 = st.selectbox("Select first city", city_options, key="city1")
     city2 = st.selectbox("Select second city", city_options, key="city2")
     
     if city1 and city2 and city1 != city2:
+        # loading data of both cities
         data1 = df[df["city"] == city1].iloc[0]
         data2 = df[df["city"] == city2].iloc[0]
     
+        # two columns for comparison
         col1, col2 = st.columns(2)
+
+        # data of city1
         with col1:
             st.markdown(f"**{data1['city']} ({data1['country']})**")
             st.metric("Air Pollution (AQI)", int(data1["aqi"]))
             st.caption(f"Last update: {pd.to_datetime(data1['timestamp']).strftime('%Y-%m-%d %H:%M')}")
     
+        # data of city2
         with col2:
             st.markdown(f"**{data2['city']} ({data2['country']})**")
             st.metric("Air Pollution (AQI)", int(data2["aqi"]))
             st.caption(f"Last update: {pd.to_datetime(data2['timestamp']).strftime('%Y-%m-%d %H:%M')}")
     
+        # displays the comparison
         diff = int(data2["aqi"]) - int(data1["aqi"])
         better_city = data1["city"] if data1["aqi"] < data2["aqi"] else data2["city"]
         aqi_diff = abs(diff)
@@ -247,7 +289,8 @@ label {
 
     st.markdown("### Air pollution ranking")
 
-    tab1, tab2, tab3, tab4, tab5 = st.tabs(["Top 10 Worldwide", "Top 10 best by continent", "Top 10 worst by continent", "Capitals with AQI-Data", "No AQI-Data"])
+    # tab windows to categories and compare capitals
+    tab1, tab2, tab3, tab4 = st.tabs(["Top 10 capitals worldwide", "Top 10 capitals by continent", "Capitals with AQI-Data", "No AQI-Data"])
 
     with tab1:
         # Top 10 Worldwide
@@ -274,39 +317,37 @@ label {
         render_centered_table(top10_table, aqi_col=True)
 
     with tab2:
-        # Top 10 best by continent
+        # Top10 capitals by continent (AQI)
+        st.markdown("#### Top 10 capitals by continent (AQI)")
+
+        # Dropdown of best/worst data
+        option = st.selectbox(
+            "Select:",
+            ("Top 10 best countries (low AQI)", "Top 10 worst countries (high AQI)")
+        )
+
         continents = ["Africa", "Asia", "Europe", "North America", "South America", "Oceania"]
+
+        # display top10 best and worst capitals by continent
         for continent in continents:
             continent_df = df[df["continent"] == continent]
-            best_countries = continent_df[continent_df['aqi'].notnull()].sort_values("aqi").head(10)
 
-            top10_table = best_countries[["country", "aqi", "timestamp"]].rename(
+            if option == "Top 10 best countries (low AQI)":
+                top_countries = continent_df[continent_df['aqi'].notnull()].sort_values("aqi").head(10)
+            else:
+                top_countries = continent_df[continent_df['aqi'].notnull()].sort_values("aqi", ascending=False).head(10)
+
+            top10_table = top_countries[["country", "aqi", "timestamp"]].rename(
                 columns={"country": "Countries", "aqi": "Air pollution (AQI)", "timestamp" : "Timestamp"}
             )
             top10_table.insert(0, "Rank", range(1, len(top10_table) + 1))
             top10_table["Air pollution (AQI)"] = top10_table["Air pollution (AQI)"].astype(int)
             top10_table["Timestamp"] = pd.to_datetime(top10_table["Timestamp"]).dt.strftime("%Y-%m-%d %H:%M")
 
-            st.markdown(f"#### Top 10 best countries by AQI in {continent}")
+            st.markdown(f"#### {option} in {continent}")
             render_centered_table(top10_table, aqi_col=True)
 
     with tab3:
-        # Top 10 worst by continent
-        for continent in continents:
-            continent_df = df[df["continent"] == continent]
-            worst_countries = continent_df[continent_df['aqi'].notnull()].sort_values("aqi", ascending=False).head(10)
-
-            top10_table = worst_countries[["country", "aqi", "timestamp"]].rename(
-                columns={"country": "Countries", "aqi": "Air pollution (AQI)", "timestamp" : "Timestamp"}
-            )
-            top10_table.insert(0, "Rank", range(1, len(top10_table) + 1))
-            top10_table["Air pollution (AQI)"] = top10_table["Air pollution (AQI)"].astype(int)
-            top10_table["Timestamp"] = pd.to_datetime(top10_table["Timestamp"]).dt.strftime("%Y-%m-%d %H:%M")
-
-            st.markdown(f"#### Top 10 worst countries by AQI in {continent}")
-            render_centered_table(top10_table, aqi_col=True)
-
-    with tab4:
         # Capitals with AQI-Data
         capitals_with_data = df[df['aqi'].notnull()]
         capitals_with_data_table = capitals_with_data[["city", "country", "aqi", "timestamp"]].rename(
@@ -319,7 +360,7 @@ label {
         st.markdown("#### Capital Cities with AQI Data")
         render_centered_table(capitals_with_data_table)
 
-    with tab5:
+    with tab4:
         # No AQI Data
         capitals_without_data = df[df['aqi'].isnull()]
         capitals_without_data_table = capitals_without_data[["city", "country"]].rename(
