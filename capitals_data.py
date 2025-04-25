@@ -1,6 +1,6 @@
 def get_capitals():
     '''
-    his function contains all countries and capitals with latitude and longitude and the category of continent.
+    This function contains all countries and capitals with geographic coordinates (latitude and longitude) and the category of continent.
     '''
     return [
         # North America:

@@ -8,7 +8,7 @@ Its goal is to help users understand the air quality in any city and receive gui
 
 The user can check the air quality in two different ways.
 
-### 1. Manual Search by City
+### 1. Manual Search by City - (Check a City)
 
 - Enter any city name into the search bar.
 - A request is sent to the WAQI API to fetch the latest AQI data.
@@ -17,8 +17,17 @@ The user can check the air quality in two different ways.
   - Health advice based on the AQI
   - A map showing the location of the city.
 
+### 2. Worldmap of countries and capitals with Air pollution (AQI) - (Copare Capitals)
+- Colored map (green, yellow, red, gray) based on AQI categories 
+- Capital marked with black dots on the worldmap
+- Custom legend and an interactive worldmap
+- Update button to refresh realtime AQI data via API call - currently limited by 1 hour
+  - Tabs for:
+    - Top10 AQI-ranked capitals (worldwide and per continent)
+    - All capitals with AQI data
+    - More capitals without AQI data
 
-### 2. Auto-Detects User Location
+### 3. Auto-Detects User Location - (Check my Location)
 
 - The app attempts to detect the user's current city based on their IP address using the [ipinfo.io](https://ipinfo.io) API.
 - This IP-based detection estimates the user’s location, usually by identifying the nearest big city.
@@ -30,10 +39,17 @@ The user can check the air quality in two different ways.
 > **Note:** IP-based detection is approximate and may be incorrect at times. It's an attempt to show what the app could be capable of if there were a way to pinpoint the exact location of the user using streamlit.
 
 
+### 4. My favourite Cities
+- This page saves all your favourite cities
+- This can be seen as a quick view of a city's air pollution score
+
 ## App Features
 
 - Real-time air quality monitoring
 - Gauge chart with color scale (green to maroon)
 - Health recommendations based on AQI levels
-- Interactive Folium map
+- Interactive Folium maps
 - Sidebar navigation to switch between city search and auto-location
+- Dashboard of capitals AQI data
+- Comparison tool of two capitals
+- Saving your favourite cities

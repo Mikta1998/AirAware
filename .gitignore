@@ -16,7 +16,7 @@ venv/
 Thumbs.db
 
 # Environment Variables
-.env
+#.env
 
 # Streamlit stuff
 .streamlit/secrets.toml

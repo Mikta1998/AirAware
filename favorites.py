@@ -4,17 +4,18 @@ from search import aqi_color
 
 def remove_city(city):
     '''
-    Callback to remove a city.
+    Callback function to remove a city from the favourites list.
     '''
     st.session_state.favorites.pop(city, None)
     st.session_state[f"confirming_{city}"] = False
 
 def show_fav_cities():
     '''
-    This function shows how the favourite city is saved in the favourite site.
+    Display the user's favourite cities along with AQI data.
     '''
     st.title("⭐ Your favourite cities")
 
+    # initializes the favourite list if not already in session state
     if "favorites" not in st.session_state:
         st.session_state.favorites = {}
 
@@ -22,6 +23,7 @@ def show_fav_cities():
         st.info("You haven't saved your favourite city yet.")
         return
 
+    # using CSS to style saved cities in the favourite list
     st.markdown(
         """
         <style>
@@ -53,6 +55,7 @@ def show_fav_cities():
         unsafe_allow_html=True
     )
 
+    # display favourite cities in two columns
     fav_list = list(st.session_state.favorites.items())
     n_cols = 2
 
@@ -66,6 +69,7 @@ def show_fav_cities():
                 lon = data.get('lon', '-')
                 label, color = aqi_color(aqi)
 
+                # render saved cities with AQI data in original colour from AQI website
                 st.markdown(
                     f"""
                     <div class="fav-card">
@@ -86,6 +90,7 @@ def show_fav_cities():
                     unsafe_allow_html=True,
                 )
 
+                # confirmation flow for removing a city
                 confirm_key = f"confirming_{city}"
                 if confirm_key not in st.session_state:
                     st.session_state[confirm_key] = False
@@ -93,10 +98,14 @@ def show_fav_cities():
                 if st.session_state[confirm_key]:
                     st.warning(f"Do you want to remove **{city}** out of your favourite list?")
                     col_confirm, col_cancel = st.columns(2)
+
+                    # button to confirm deletion of a city
                     with col_confirm:
                         if st.button("✅ Yes", key=f"yes_{city}"):
                             remove_city(city)
                             st.rerun()
+
+                    # button to cancel deletion of a city
                     with col_cancel:
                         if st.button("❌ No", key=f"no_{city}"):
                             st.session_state[confirm_key] = False
