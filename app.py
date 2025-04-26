@@ -1,6 +1,5 @@
 import streamlit as st
 from search import show_search              # Function for manual city AQI search
-from ip_location import show_ip_location    # Function for IP-based AQI detection
 from main_map import show_worldmap
 from favorites import show_fav_cities
 import folium
