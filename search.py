@@ -5,7 +5,7 @@ from streamlit_folium import st_folium
 from api import fetch_aqi
 from features.features import aqi_advice, aqi_color
 
-# Initialize favorites if not in session state
+# Initialize favorites safely
 if "favorites" not in st.session_state:
     st.session_state.favorites = {}
 
@@ -39,7 +39,11 @@ def show_search():
 
     col_search, col_fav = st.columns([5, 1])
     with col_search:
-        city = st.text_input("Enter a city name", key="city_search", autocomplete="off")
+        city = st.text_input("Enter a city name", key="city_search")
+
+    # 🛠️ Ensure favorites are initialized (important for first load)
+    if "favorites" not in st.session_state:
+        st.session_state.favorites = {}
 
     show_fav_btn = (
         city
@@ -52,7 +56,7 @@ def show_search():
         if show_fav_btn:
             if st.button("☆", key="fav_btn", help="Save as favourite"):
                 st.session_state.favorites[city] = st.session_state.current_result
-                st.success(f"✅ {city} saved in favourites!")
+                st.success(f"{city} saved in favourites!")
 
     # Initial values
     aqi = None
@@ -103,7 +107,7 @@ def show_search():
         st.markdown(f"**AQI:** {aqi}  \n"
                     f"**Air Quality:** <span style='color:{color}; font-weight:bold'>{label}</span>",
                     unsafe_allow_html=True)
-        st.info(f"💡 {advice}")
+        st.info(f"{advice}")
     else:
         st.markdown("**AQI:**  \n**Air Quality:**")
 
