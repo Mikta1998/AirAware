@@ -6,9 +6,9 @@ import folium
 from streamlit_folium import st_folium
 
 # Set app title and layout
-st.set_page_config(page_title="Air Quality Dashboard", layout="wide", initial_sidebar_state="expanded")
+st.set_page_config(page_title="Air Quality Dashboard", layout="wide")
 
-# CSS for custom fonts, sidebar style, and hiding sidebar toggle
+# CSS for custom fonts and sidebar style
 st.markdown("""
     <style>
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
@@ -17,9 +17,6 @@ st.markdown("""
     }
     [data-testid="stSidebar"] {
         background-color: #f8f8f800;
-    }
-    [data-testid="collapsedControl"] {
-        display: none;
     }
     </style>
 """, unsafe_allow_html=True)
@@ -33,7 +30,7 @@ st.markdown("""
 <div style="background: linear-gradient(to right, #4a90e2, #f06292); padding: 2rem; border-radius: 0.5rem;">
     <h1 style="color:white; font-size:2.5rem;">Global Air Quality Dashboard</h1>
     <p style="color:white;">Check real-time air quality across cities worldwide using live data from WAQI.</p>
-    <h4 style="color:white; font-size:1.5rem;">Description of AQI:</h4>
+    <h4 style="color:white; font-size:1.5rem;"> Description of AQI:</h4>
     <p style="color:white;">The Air Quality Index (AQI) is a standardized measure used to assess the level of air pollution at a specific location and time. \
         It is calculated based on the concentrations of key air pollutants such as particulate matter (PM2.5, PM10), ozone (O₃), carbon monoxide (CO), sulfur dioxide (SO₂), and nitrogen dioxide (NO₂). \
         The AQI typically ranges from 0 to 500, with higher values indicating poorer air quality and greater potential health risks. \
