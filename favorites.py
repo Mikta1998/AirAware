@@ -79,11 +79,11 @@ def show_fav_cities():
                             <b>Status:</b> <span style="color:{color};">{label}</span>
                         </div>
                         <div style="font-size:0.97em; margin-bottom:0.4em;">
-                            <b>Empfehlung:</b><br>
+                            <b>Recommendation:</b><br>
                             <span style="color:#eee;">{advice}</span>
                         </div>
                         <div style="font-size:0.93em; color:#eee;">
-                            <b>Koordinaten:</b> {lat}, {lon}
+                            <b>Coordinates:</b> {lat}, {lon}
                         </div>
                     </div>
                     """,
@@ -101,13 +101,13 @@ def show_fav_cities():
 
                     # button to confirm deletion of a city
                     with col_confirm:
-                        if st.button("✅ Yes", key=f"yes_{city}"):
+                        if st.button("Yes", key=f"yes_{city}"):
                             remove_city(city)
                             st.rerun()
 
                     # button to cancel deletion of a city
                     with col_cancel:
-                        if st.button("❌ No", key=f"no_{city}"):
+                        if st.button("No", key=f"no_{city}"):
                             st.session_state[confirm_key] = False
                             st.rerun()
                 else:

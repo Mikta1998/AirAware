@@ -24,7 +24,7 @@ st.markdown("""
 
 # Sidebar menu for switching views
 st.sidebar.title("Navigation")
-page = st.sidebar.radio("Choose view:", ["Check a City", "Compare Capitals", "Check my Location", "My favourite Cities"])
+page = st.sidebar.radio("Choose view:", ["Check a City", "Compare Capitals", "Check my Location", "My Favourite Cities"])
 
 # Displays header at the top of every view
 st.markdown("""
@@ -40,12 +40,11 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # Shows the selected pages
-
 if page == "Check a City":
     show_search()              # Displays manual search view
 elif page == "Compare Capitals":
-    show_worldmap()             # Displays the wordlwide map with a comparison of each capital
+    show_worldmap()             # Displays the worldwide map with comparison
 elif page == "Check my Location":
     show_ip_location()         # Displays auto-detect location view
-elif page == "My favourite Cities":
+elif page == "My Favourite Cities":
     show_fav_cities()           # Displays your favourite cities

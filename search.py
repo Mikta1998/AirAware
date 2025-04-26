@@ -5,12 +5,12 @@ from streamlit_folium import st_folium
 from api import fetch_aqi
 from features.features import aqi_advice, aqi_color
 
-# initialize if favourite is not in session state
+# Initialize favorites if not in session state
 if "favorites" not in st.session_state:
     st.session_state.favorites = {}
 
 def show_search():
-    # CSS nur auf dieser Seite aktiv
+    # CSS styling for favorite button
     st.markdown("""
     <style>
     div[data-testid="stHorizontalBlock"] > div:nth-child(2) button {
@@ -39,11 +39,12 @@ def show_search():
 
     col_search, col_fav = st.columns([5, 1])
     with col_search:
-        city = st.text_input("Enter a city name", key="city_search")
+        city = st.text_input("Enter a city name", key="city_search", autocomplete="off")
 
     show_fav_btn = (
         city
         and "current_result" in st.session_state
+        and isinstance(st.session_state.current_result, dict)
         and city.lower() not in [c.lower() for c in st.session_state.favorites.keys()]
     )
 
@@ -51,27 +52,39 @@ def show_search():
         if show_fav_btn:
             if st.button("☆", key="fav_btn", help="Save as favourite"):
                 st.session_state.favorites[city] = st.session_state.current_result
-                st.success(f"{city} saved in favourite!")
+                st.success(f"✅ {city} saved in favourites!")
 
-    # Initialwerte
+    # Initial values
     aqi = None
     label = None
     color = None
     advice = None
-    lat, lon = 20, 0  # default
+    lat, lon = 20, 0  # Default location
 
     if city:
         with st.spinner("Fetching air quality data..."):
-            # respone is the whole API response
-            response = fetch_aqi(city)  
+            response = fetch_aqi(city)
 
-        # checks if response is a dict and the necessary values exists
         if response and isinstance(response, dict):
             aqi = response.get("aqi", None)
-            label, color = aqi_color(aqi) if aqi is not None else (None, None)
-            advice = aqi_advice(aqi) if aqi is not None else None
-            lat = response.get("lat", lat)  # fallback 
-            lon = response.get("lon", lon)  # fallback 
+
+            if aqi == "-" or aqi is None:
+                st.warning(f"No AQI data available for **{city}**.")
+                st.session_state.current_result = None
+                return
+
+            try:
+                aqi = int(aqi)
+            except (ValueError, TypeError):
+                st.warning(f"No valid AQI data for **{city}**.")
+                st.session_state.current_result = None
+                return
+
+            label, color = aqi_color(aqi)
+            advice = aqi_advice(aqi)
+            lat = response.get("lat", lat)
+            lon = response.get("lon", lon)
+
             st.session_state.current_result = {
                 "aqi": aqi,
                 "label": label,
@@ -96,15 +109,26 @@ def show_search():
 
     col1, col2 = st.columns([3, 1], gap="large")
 
-    # this shows the tacho plot of AQI
     with col1:
         fig = go.Figure(go.Indicator(
             mode="gauge+number",
             value=aqi if aqi is not None else 0,
+            number={"font": {"size": 42}},
             title={"text": "Air Quality Index", "font": {"size": 22}},
             gauge={
-                "axis": {"range": [0, 500], "tickwidth": 2, "tickcolor": "white"},
-                "bar": {"color": "rgba(0,0,0,0)", "thickness": 0.1},
+                "axis": {
+                    "range": [0, 500],
+                    "tickwidth": 2,
+                    "tickcolor": "white",
+                    "tickfont": {"size": 16},
+                    "tickmode": "linear",
+                    "tick0": 0,
+                    "dtick": 50
+                },
+                "bar": {
+                    "color": color if color else "green",  # Fill gauge bar with AQI color
+                    "thickness": 0.3
+                },
                 "steps": [
                     {"range": [0, 50], "color": "green"},
                     {"range": [51, 100], "color": "yellow"},
@@ -114,28 +138,25 @@ def show_search():
                     {"range": [301, 500], "color": "maroon"},
                 ],
                 "threshold": {
-                    "line": {"color": color if color else "green", "width": 4},
+                    "line": {"color": "white", "width": 4},
                     "thickness": 0.75,
                     "value": aqi if aqi is not None else 0
                 }
             },
-            domain={"x": [0, 1], "y": [0, 1]}  
+            domain={"x": [0, 1], "y": [0, 1]}
         ))
-    
-        # updating the graphic
+
         fig.update_layout(
             paper_bgcolor="rgba(0,0,0,0)",
             font={"color": "white"},
-            autosize=True,  
-            width=800,  # width of the graphic
-            height=450,  # hight of the graphic
-            margin={"t": 0, "b": 0, "l": 0, "r": 0}, 
+            autosize=True,
+            width=800,
+            height=450,
+            margin={"t": 80, "b": 40, "l": 40, "r": 40},
         )
-    
-        # rendering the graphic
-        st.plotly_chart(fig, use_container_width=True)
 
-    # defining the AQI legend
+        st.plotly_chart(fig, use_container_width=True, config={"displayModeBar": False})
+
     with col2:
         st.markdown("""
         <div style='padding-top: 1rem;'>
@@ -153,7 +174,6 @@ def show_search():
 
     st.subheader("Location on Interactive Map")
 
-    # builds the map
     m = folium.Map(location=[lat, lon], zoom_start=4 if city else 2, tiles="OpenStreetMap")
     if city and aqi is not None:
         folium.Marker(
@@ -162,6 +182,5 @@ def show_search():
             popup=f"AQI: {aqi}",
             icon=folium.Icon(color="red" if aqi > 100 else "green")
         ).add_to(m)
+
     st_folium(m, width=800, height=600)
-
-

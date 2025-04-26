@@ -1,4 +1,11 @@
+
 def aqi_color(aqi):
+    # ensure aqi is an integer if possible
+    try:
+        aqi = int(aqi)
+    except (ValueError, TypeError):
+        return "No Data", "gray"
+
     if aqi <= 50: return "Good", "green"
     elif aqi <= 100: return "Moderate", "yellow"
     elif aqi <= 150: return "Unhealthy for Sensitive Groups", "orange"

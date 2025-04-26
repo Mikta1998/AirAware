@@ -253,7 +253,7 @@ label {
     df = pd.DataFrame(capitals)
 
     # Comparison tool of two capitals
-    st.markdown("## 🌆 City Comparison Tool")
+    st.markdown("## City Comparison Tool")
     city_options = df[df["aqi"].notnull()]["city"].unique()
     city1 = st.selectbox("Select first city", city_options, key="city1")
     city2 = st.selectbox("Select second city", city_options, key="city2")
