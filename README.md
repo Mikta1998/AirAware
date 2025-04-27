@@ -6,7 +6,7 @@ Its goal is to help users understand the air quality in any city and receive gui
 
 ## How the App Works
 
-The user can check the air quality in four different ways:
+The user can check the air quality in 2 different ways:
 
 ### 1. Manual Search by City - (Check a City)
 
@@ -39,19 +39,7 @@ The user can check the air quality in four different ways:
 
 ---
 
-### 3. Auto-Detect User Location - (Check my Location)
-
-- The app attempts to detect the user's city using the [ipinfo.io](https://ipinfo.io) API.
-- Once the city is detected, the app displays:
-  - A color-coded AQI gauge showing the air quality level.
-  - Health advice based on the AQI value.
-  - A map with the city's location.
-
-> **Note:** IP-based location detection may be approximate and may detect nearby large cities instead of exact locations.
-
----
-
-### 4. My Favourite Cities
+### My Favourite Cities
 
 - This page lists all cities saved by the user as favourites.
 - For each saved city, it shows:
@@ -67,7 +55,6 @@ The user can check the air quality in four different ways:
 
 - Real-time air quality monitoring (WAQI API)
 - Manual search by city
-- Auto-location detection
 - World map with AQI-based coloring
 - Health advice and AQI color legends
 - Favorites saving and management
