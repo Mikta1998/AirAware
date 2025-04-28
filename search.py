@@ -41,7 +41,7 @@ def show_search():
     with col_search:
         city = st.text_input("Enter a city name", key="city_search")
 
-    # 🛠️ Ensure favorites are initialized (important for first load)
+    # Ensure favorites are initialized (important for first load)
     if "favorites" not in st.session_state:
         st.session_state.favorites = {}
 
