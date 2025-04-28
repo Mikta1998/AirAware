@@ -5,7 +5,7 @@ This Streamlit app uses real-time data from the [World Air Quality Index (WAQI)]
 Its goal is to help users understand the air quality in any city and receive guidance on how to proceed based on live Air Quality Index values.
 
 ## How the App Works
-
+To start the app, please install the requirements.txt file. The link to the deployed app is https://airaware-dashboard.streamlit.app/
 The user can check the air quality in 2 different ways:
 
 ### 1. Manual Search by City - (Check a City)
