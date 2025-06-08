@@ -1,11 +1,61 @@
+import sys
+import os
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
 import streamlit as st
 import folium
 from streamlit_folium import st_folium
 import requests
 import pandas as pd
 import json
-from capitals_data import get_capitals
-from api import dummy_data, fetch_and_store_aqi_for_all_countries, save_dummy_data
+from datetime import datetime, timedelta
+from backend.capitals_data import get_capitals
+from backend.api import get_aqi_for_city
+from backend.data.new_database import PostgresDB
+
+
+UPDATE_INTERVAL_MINUTES = 15
+
+db = PostgresDB()
+
+# button for updating the AQI-values manually
+def safe_int(value):
+    try:
+        return int(value)
+    except (ValueError, TypeError):
+        return None
+
+
+def update_aqi_data():
+    capitals_list = get_capitals()
+    for entry in capitals_list:
+        country = entry["country"]
+        capital = entry["city"]
+        aqi_data = get_aqi_for_city(capital, country)
+
+        if aqi_data:
+            aqi_value = safe_int(aqi_data.get("aqi"))
+            if aqi_value is not None:
+                db.insert_aqi(
+                    country=country,
+                    city=capital,
+                    lat=aqi_data["lat"],
+                    lon=aqi_data["lon"],
+                    aqi=aqi_value,
+                    timestamp=aqi_data["timestamp"]
+                )
+
+# automatically update of aqi values every 15 minutes
+if "last_update" not in st.session_state:
+    st.session_state["last_update"] = None
+
+now = datetime.utcnow()
+# automatic update, if session_state is set and 15 minutes are over
+if st.session_state["last_update"] is not None:
+    if now - st.session_state["last_update"] > timedelta(minutes=15):
+        update_aqi_data()
+        st.session_state["last_update"] = now
+
 
 def get_aqi_color(aqi):
     '''
@@ -82,8 +132,11 @@ def show_worldmap():
     geojson_url = "https://raw.githubusercontent.com/johan/world.geo.json/master/countries.geo.json"
     countries_geojson = requests.get(geojson_url).json()
 
+    # loading database
+    db = PostgresDB()
+
     # loading capitals data
-    capitals = get_capitals()
+    aqi = db.get_latest_aqi_per_city()
 
     # loading recent AQI data out of capitals_data.json or runs without data 
     try:
@@ -92,19 +145,8 @@ def show_worldmap():
     except (FileNotFoundError, json.JSONDecodeError):
         real_aqi_data = {}
 
-    # adding AQI values and timestamp to every city
-    for c in capitals:
-        country = c["country"]
-        country_data = real_aqi_data.get(country, {})
-
-        aqi_value = country_data.get("aqi", None)
-        timestamp = country_data.get("timestamp", None)
-
-        c["aqi"] = int(aqi_value) if aqi_value is not None and aqi_value != "-" else None
-        c["timestamp"] = timestamp
-
     # maps the country with colour by it's capital AQI
-    country_aqi_map = {c["country"]: c["aqi"] for c in capitals}
+    country_aqi_map = {c["country"]: c["aqi"] for c in aqi}
 
     def style_function(feature):
         country_name = feature["properties"]["name"]
@@ -146,7 +188,7 @@ def show_worldmap():
     ).add_to(m)
 
     # mapping the capitals on the worldmap
-    for capital in capitals:
+    for capital in aqi:
         folium.CircleMarker(
             location=[capital["lat"], capital["lon"]],
             radius=2,
@@ -160,19 +202,38 @@ def show_worldmap():
     # shows the map
     st_folium(m, use_container_width=True, height=600)
 
-    # button for updating the AQI-values manually
     if st.button("🔄 Update"):
-        st.info("Update can take up to five minutes.")
-        with st.spinner("Load new Data..."):
-            # ensure to reload the data after every saved date
-            dummy_data["last_updated_date"] = "1900-01-01"
-            save_dummy_data(dummy_data)
-            fetch_and_store_aqi_for_all_countries()
-            st.success("Updated successfully.")
-            
-            # this reloads all tab windows (tables)
-            st.session_state.refresh = True  # trigger for reloading 
-            st.rerun()  
+        st.info("Update can take up to 5 minutes.")
+        with st.spinner("Loading new data..."):
+            capitals_list = get_capitals()
+            inserted_rows = []
+
+            for entry in capitals_list:
+                country = entry["country"]
+                capital = entry["city"]
+                aqi_data = get_aqi_for_city(capital, country)
+
+                if aqi_data:
+                    aqi_value = safe_int(aqi_data.get("aqi"))
+                    if aqi_value is not None:
+                        db.insert_aqi(
+                            country=country,
+                            city=capital,
+                            lat=aqi_data["lat"],
+                            lon=aqi_data["lon"],
+                            aqi=aqi_value,
+                            timestamp=aqi_data["timestamp"]
+                        )
+                        inserted_rows.append({
+                            "country": country,
+                            "city": capital,
+                            "lat": aqi_data["lat"],
+                            "lon": aqi_data["lon"],
+                            "aqi": aqi_value,
+                            "timestamp": aqi_data["timestamp"]
+                        })
+
+            st.success("Update finished.")
 
     # --------- TAB & DROPDOWN STYLING (CSS) ----------
     st.markdown("""
@@ -250,7 +311,14 @@ label {
     
     # --- Comparison Tool ---
     # DataFrame with capitals data
-    df = pd.DataFrame(capitals)
+    df_aqi = pd.DataFrame(aqi)
+
+    capitals = get_capitals()
+
+    df_capitals = pd.DataFrame(capitals)[["country", "continent"]]
+
+    # merge dataframes
+    df = pd.merge(df_aqi, df_capitals, on="country", how="left")
 
     # Comparison tool of two capitals
     st.markdown("## City Comparison Tool")
@@ -290,7 +358,7 @@ label {
     st.markdown("### Air pollution ranking")
 
     # tab windows to categories and compare capitals
-    tab1, tab2, tab3, tab4 = st.tabs(["Top 10 capitals worldwide", "Top 10 capitals by continent", "Capitals with AQI-Data", "No AQI-Data"])
+    tab1, tab2, tab3 = st.tabs(["Top 10 capitals worldwide", "Top 10 capitals by continent", "Capitals with AQI-Data"])
 
     with tab1:
         # Top 10 Worldwide
@@ -360,12 +428,3 @@ label {
         st.markdown("#### Capital Cities with AQI Data")
         render_centered_table(capitals_with_data_table)
 
-    with tab4:
-        # No AQI Data
-        capitals_without_data = df[df['aqi'].isnull()]
-        capitals_without_data_table = capitals_without_data[["city", "country"]].rename(
-            columns={"city": "Capital", "country": "Countries"}
-        )
-        capitals_without_data_table.insert(0, "Rank", range(1, len(capitals_without_data_table) + 1))
-        st.markdown("#### Capital Cities without AQI Data")
-        render_centered_table(capitals_without_data_table, aqi_col=False)

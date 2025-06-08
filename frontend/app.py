@@ -1,9 +1,29 @@
+import sys
+import os
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
 import streamlit as st
-from search import show_search              # Function for manual city AQI search
-from main_map import show_worldmap
-from favorites import show_fav_cities
+import threading
+from frontend.search import show_search              # Function for manual city AQI search
+from frontend.main_map import show_worldmap
+from frontend.favorites import show_fav_cities
 import folium
 from streamlit_folium import st_folium
+from frontend.plots import show_aqi_plots
+from backend.data.scheduler import start_scheduler
+
+
+# calling scheduler 
+def run_scheduler_once():
+    '''
+    This function calls the scheduler.py script, which updates the aqi values every 15 minutes, if the app is running.
+    '''
+    if "scheduler_started" not in st.session_state:
+        threading.Thread(target=start_scheduler, daemon=True).start()
+        st.session_state["scheduler_started"] = True
+
+run_scheduler_once()
+
 
 # Set app title and layout
 st.set_page_config(page_title="Air Quality Dashboard", layout="wide")
@@ -23,7 +43,7 @@ st.markdown("""
 
 # Sidebar menu for switching views
 st.sidebar.title("Navigation")
-page = st.sidebar.radio("Choose view:", ["Check a City", "Compare Capitals", "My Favourite Cities"])
+page = st.sidebar.radio("Choose view:", ["Check a City", "Compare Capitals", "Plots", "My Favourite Cities"])
 
 # Displays header at the top of every view
 st.markdown("""
@@ -43,5 +63,7 @@ if page == "Check a City":
     show_search()              # Displays manual search view
 elif page == "Compare Capitals":
     show_worldmap()             # Displays the worldwide map with comparison
+elif page == "Plots":
+    show_aqi_plots()
 elif page == "My Favourite Cities":
     show_fav_cities()           # Displays your favourite cities

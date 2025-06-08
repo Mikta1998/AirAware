@@ -1,5 +1,10 @@
+import sys
+import os
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
+
 import streamlit as st
-from search import aqi_color
+from frontend.search import aqi_color
 
 
 def remove_city(city):
