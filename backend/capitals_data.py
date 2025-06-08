@@ -4,7 +4,7 @@ def get_capitals():
     '''
     return [
         # North America:
-        {"city": "Washington D.C.", "lat": 38.8951, "lon": -77.0364, "country": "United States", "continent" : "North America"},
+        {"city": "Washington D.C.", "lat": 38.8951, "lon": -77.0364, "country": "United States of America", "continent" : "North America"},
         {"city": "Ottawa", "lat": 45.4215, "lon": -75.6997, "country": "Canada", "continent" : "North America"},
         {"city": "Mexico City", "lat": 19.4326, "lon": -99.1332, "country": "Mexico", "continent" : "North America"},
         ## Central America:
