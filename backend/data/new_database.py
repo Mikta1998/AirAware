@@ -7,6 +7,9 @@ load_dotenv()
 
 class PostgresDB:
     def __init__(self):
+        '''
+        This function connect the database and ensures that the aqi_data table exists.
+        '''
         self.conn = psycopg2.connect(
             dbname=os.getenv("DB_NAME"),
             user=os.getenv("DB_USER"),
@@ -17,6 +20,10 @@ class PostgresDB:
         self.create_table()
 
     def create_table(self):
+        '''
+        This function initialize the aqi_data table if it does not exist.
+        Columns: id, country, city=capital, lat=latitude, lon=longitude, aqi, timestamp
+        '''
         query = """
         CREATE TABLE IF NOT EXISTS aqi_data (
             id SERIAL PRIMARY KEY,
@@ -33,6 +40,10 @@ class PostgresDB:
             self.conn.commit()
 
     def insert_aqi(self, country, city, lat, lon, aqi, timestamp=None):
+        '''
+        This function inserts new data into the database.
+        If no timestamp exists the current time is taken.
+        '''
         if timestamp is None:
             timestamp = datetime.utcnow()
         query = """
@@ -44,6 +55,9 @@ class PostgresDB:
             self.conn.commit()
 
     def get_latest_aqi(self):
+        '''
+        This function returns the newest aqi data.
+        '''
         query = """
         SELECT country, city, lat, lon, aqi, timestamp
         FROM (
@@ -68,18 +82,28 @@ class PostgresDB:
         return result
 
     def get_all_aqi(self):
+        '''
+        This function gets all aqi data.
+        '''
         query = "SELECT * FROM aqi_data ORDER BY timestamp DESC;"
         with self.conn.cursor() as cur:
             cur.execute(query)
             return cur.fetchall()
 
     def count_entries(self):
+        '''
+        This function returns the amount of entries in the database.
+        '''
         query = "SELECT COUNT(*) FROM aqi_data;"
         with self.conn.cursor() as cur:
             cur.execute(query)
             return cur.fetchone()[0]
 
     def get_latest_aqi_per_city(self):
+        '''
+        This function returns the newest aqi data for every capital.
+        Uses DISTINCT ON to get only the current entry.
+        '''
         with self.conn.cursor() as cur:
             cur.execute("""
                 SELECT DISTINCT ON (country, city)

@@ -4,7 +4,7 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 import streamlit as st
 import threading
-from frontend.search import show_search              # Function for manual city AQI search
+from frontend.search import show_search              
 from frontend.main_map import show_worldmap
 from frontend.favorites import show_fav_cities
 import folium
@@ -13,7 +13,7 @@ from frontend.plots import show_aqi_plots
 from backend.data.scheduler import start_scheduler
 
 
-# calling scheduler 
+# scheduler for update
 def run_scheduler_once():
     '''
     This function calls the scheduler.py script, which updates the aqi values every 15 minutes, if the app is running.
@@ -64,6 +64,6 @@ if page == "Check a City":
 elif page == "Compare Capitals":
     show_worldmap()             # Displays the worldwide map with comparison
 elif page == "Plots":
-    show_aqi_plots()
+    show_aqi_plots()            # Displays the analytics of time-series analytics
 elif page == "My Favourite Cities":
     show_fav_cities()           # Displays your favourite cities

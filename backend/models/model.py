@@ -3,6 +3,9 @@ from prophet import Prophet
 from backend.data.new_database import PostgresDB
 
 def load_city_data_from_postgres(city_name: str, days: int = 30):
+    '''
+    This function loads aqi values of a specific capital out of the database. 
+    '''
     db = PostgresDB()
     query = """
         SELECT timestamp, aqi FROM aqi_data
@@ -10,13 +13,18 @@ def load_city_data_from_postgres(city_name: str, days: int = 30):
         AND timestamp >= NOW() - INTERVAL '%s days'
         ORDER BY timestamp ASC
     """
+    # sql call 
     df = pd.read_sql_query(query, db.conn, params=(city_name, days))
+
     df['ds'] = pd.to_datetime(df['timestamp'])
     df['y'] = pd.to_numeric(df['aqi'], errors='coerce')
     df = df[['ds', 'y']].dropna()
     return df
 
 def split_train_eval(df: pd.DataFrame, eval_ratio: float = 0.2):
+    '''
+    This function splits data into training and test set.
+    '''
     df = df.sort_values('ds')
     n = int(len(df) * (1 - eval_ratio))
     train_df = df.iloc[:n]
@@ -24,6 +32,9 @@ def split_train_eval(df: pd.DataFrame, eval_ratio: float = 0.2):
     return train_df, eval_df
 
 def train_and_forecast(df: pd.DataFrame, hours_ahead: int = 48):
+    '''
+    This function train a prophet model and creates predictions for a specific hour.
+    '''
     if df.empty or len(df) < 10:
         raise ValueError("Not enough data for prediction.")
     model = Prophet(daily_seasonality=True)

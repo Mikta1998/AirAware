@@ -50,6 +50,7 @@ if "last_update" not in st.session_state:
     st.session_state["last_update"] = None
 
 now = datetime.utcnow()
+
 # automatic update, if session_state is set and 15 minutes are over
 if st.session_state["last_update"] is not None:
     if now - st.session_state["last_update"] > timedelta(minutes=15):

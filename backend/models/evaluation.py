@@ -13,6 +13,9 @@ from backend.models.model import load_city_data_from_postgres
 from backend.capitals_data import get_capitals
 
 def find_time_and_target_column(df):
+    '''
+    This function finds the correct columns in the DataFrame.
+    '''
     for tcol in ["timestamp", "ds", "date", "datetime"]:
         if tcol in df.columns:
             time_col = tcol
@@ -30,13 +33,20 @@ def find_time_and_target_column(df):
     return time_col, target_col
 
 def evaluate_model(city_name, model_dir, results):
+    '''
+    This function does a prediction based on evaluation data. 
+    It also calculates the MAE and RMSE.
+    '''
     model_path = model_dir / f"{city_name}_prophet.pkl"
     split_path = model_dir / f"{city_name}_split.json"
     if not (model_path.exists() and split_path.exists()):
         print(f"No model or split point is found for {city_name}, skip.")
         return
 
+    # loading model
     model = joblib.load(model_path)
+
+    # loading split info
     with open(split_path) as f:
         split_info = json.load(f)
     split_point = pd.to_datetime(split_info["split_point"])

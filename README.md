@@ -45,6 +45,16 @@ The user can check the air quality in 2 different ways:
 
 ---
 
+### 3. Plots of Capitals with a time-series analytics
+- shows plots of capitals
+  - can be grouped by timestamp
+    - last 24 hours
+    - last 7 days
+    - last 30 days
+- tool to let the prophet model predict the aqi value of a capital to a specific hour in the future 7 days.
+
+---
+
 ### My Favourite Cities
 
 - This page lists all cities saved by the user as favourites.
@@ -67,4 +77,7 @@ The user can check the air quality in 2 different ways:
 - Compare AQI between capitals
 - Interactive Folium maps
 - Modern design with custom CSS
-"""
+- PostGre-SQL database with AQI-values of capitals by every 15 minutes
+- Prediction tool to predict AQI-value of a capital
+- Useing prophet model for predictions
+

@@ -11,21 +11,36 @@ import joblib
 from backend.data.new_database import PostgresDB
 
 def model_filename(city):
+    '''
+    This function is a support function to save the model for a capital.
+    '''
     return f"{city}_prophet.pkl"
 
 def predict_aqi_for_city_and_time_from_model(city: str, target_timestamp: pd.Timestamp):
+    '''
+    This function loads the prophet model and returns a prediction for a specific timestamp based on the aqi values.
+    '''
     model_path = f"backend/models/saved_models/{model_filename(city)}"
+
+    # check if model exists
     if not os.path.exists(model_path):
         raise FileNotFoundError(f"No model for {city} exists. Please train a model first.")
+    
+    # loading model and create prediction
     model = joblib.load(model_path)
     future = pd.DataFrame({'ds': [target_timestamp]})
     forecast = model.predict(future)
     pred = forecast.iloc[0]
     return pred['ds'], pred['yhat']
 
+# --- main structure of frontend ---
 def show_aqi_plots():
+    '''
+    This function is the main structure of the frontend page "Plots".
+    '''
     st.title("📊 AQI-Time-series-analytics & Prediction")
 
+    # connecting to the database
     db = PostgresDB()
     entries = db.get_all_aqi()
     if not entries:
@@ -57,6 +72,7 @@ def show_aqi_plots():
         (df["timestamp"] >= time_threshold)
     ].sort_values("timestamp")
 
+    # if data exists, create time-series plot
     if df_filtered.empty:
         st.warning(f"No data for {selected_city} at timestamp {selected_period_label}.")
     else:
@@ -78,6 +94,7 @@ def show_aqi_plots():
     vorhersage_stunde = st.slider("Choose a time", 0, 23, 12)
     target_timestamp = pd.Timestamp.combine(vorhersage_datum, time(hour=vorhersage_stunde))
 
+    # button for prediction
     if st.button("Show prediction"):
         try:
             pred_time, pred_aqi = predict_aqi_for_city_and_time_from_model(

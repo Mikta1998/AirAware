@@ -11,13 +11,19 @@ from backend.models.model import load_city_data_from_postgres, train_and_forecas
 from backend.capitals_data import get_capitals
 
 def find_time_column(df):
+    '''
+    This function searches the correct timestamp column in the DataFrame.
+    '''
     for col in df.columns:
         if col.lower() in {"timestamp", "ds", "date", "datetime", "time"}:
             return col
     raise ValueError(f"No timestamp column is found! Existing columns: {df.columns}")
 
 def main():
-    hours_ahead = 7 * 24  # 7 days
+    '''
+    This function is the main function for training and saving model predictions for capitals.
+    '''
+    hours_ahead = 7 * 24  # 7 days for prediction
     model_dir = Path(__file__).resolve().parent / "saved_models"
     model_dir.mkdir(parents=True, exist_ok=True)
 
@@ -25,7 +31,7 @@ def main():
     for city_entry in capitals:
         city_name = city_entry["city"]
         print(f"Train model for {city_name} ...")
-        # Lade alle verfügbaren Daten
+        # Loading all available data
         df = load_city_data_from_postgres(city_name)
         if len(df) < 10:
             print(f"Not enough data for {city_name}, skip.")
