@@ -4,6 +4,24 @@ To start the app, please install the requirements.txt file. Afterwards run "stre
 The link to the deployed app is: https://airaware-dashboard.streamlit.app/
 The link to the project on GitHub is: https://github.com/Mikta1998/AirAware 
 
+# Deployment mit Docker
+
+## Voraussetzungen
+
+- Docker und Docker Compose installiert
+
+## Start
+
+1. Projektordner öffnen
+2. `.env`-Datei prüfen/anpassenx
+3. Im Terminal ausführen:
+   docker-compose up --build
+4. Die App ist erreichbar unter http://localhost:8501
+
+## Hinweise
+
+- Die Datenbank ist persistent.
+- Die Zeitzone ist Europe/Berlin.
 
 # Global Air Quality Dashboard
 
