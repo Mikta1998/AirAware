@@ -1,101 +1,124 @@
-# EINLEITUNG
+# AirAware – Global Air Quality Dashboard
 
-To start the app, please install the requirements.txt file. Afterwards run "streamlit run app.py" in the terminal.
-The link to the deployed app is: https://airaware-dashboard.streamlit.app/
-The link to the project on GitHub is: https://github.com/Mikta1998/AirAware 
+## Einleitung
 
-# Deployment mit Docker
-
-## Voraussetzungen
-
-- Docker und Docker Compose installiert
-
-## Start
-
-1. Projektordner öffnen
-2. `.env`-Datei prüfen/anpassenx
-3. Im Terminal ausführen:
-   docker-compose up --build
-4. Die App ist erreichbar unter http://localhost:8501
-
-## Hinweise
-
-- Die Datenbank ist persistent.
-- Die Zeitzone ist Europe/Berlin.
-
-# Global Air Quality Dashboard
-
-This Streamlit app uses real-time data from the [World Air Quality Index (WAQI)](https://waqi.info/) API to display the current air quality (AQI) in cities around the world.
-
-Its goal is to help users understand the air quality in any city and receive guidance on how to proceed based on live Air Quality Index values.
-
-## How the App Works
-The user can check the air quality in 2 different ways:
-
-### 1. Manual Search by City - (Check a City)
-
-- Enter any city name into the search bar.
-- A request is sent to the WAQI API to fetch the latest AQI data.
-- The app displays:
-  - A color-coded AQI gauge showing the air quality level (Good, Moderate, Unhealthy, etc.).
-  - Health advice based on the AQI value.
-  - An interactive map showing the location of the city.
-  - Option to save the city to a list of favourites.
+AirAware ist ein interaktives Dashboard zur Visualisierung und Analyse der Luftqualität (AQI) in Städten weltweit.  
+Die App nutzt Echtzeitdaten der [World Air Quality Index (WAQI)](https://waqi.info/) API, speichert diese in einer PostgreSQL-Datenbank und bietet Zeitreihen-Analysen sowie Vorhersagen mit einem Prophet-Modell.
 
 ---
 
-### 2. Worldmap of Countries and Capitals with Air Pollution (AQI) - (Compare Capitals)
+## Schnellstart (empfohlen: Docker)
 
-- An interactive world map where countries are colored based on their capital city's AQI:
-  - Green (Good, 0–50)
-  - Yellow (Moderate, 51–100)
-  - Red (Unhealthy, >100)
-  - Gray (No Data)
-- Black dots represent the capital cities.
-- Features:
-  - Update button to refresh real-time AQI data (limited to once per hour).
-  - Tabs for:
-    - Top 10 capitals by AQI worldwide (best and worst).
-    - Top 10 capitals by continent.
-    - Capitals with AQI data.
-    - Capitals without AQI data.
-  - Compare two capitals side-by-side.
+### Voraussetzungen
+
+- [Docker](https://www.docker.com/get-started) und [Docker Compose](https://docs.docker.com/compose/install/) installiert
+
+### Schritt-für-Schritt-Anleitung
+
+1. **Repository klonen**
+    ```
+    git clone https://github.com/Mikta1998/AirAware.git
+    cd AirAware
+    ```
+
+2. **.env-Datei**  
+    Eine .env wurde mit ins Projekt aufgenommen.
+    Sie beinhaltet einen aktuellen API-Key von der WAQI-API und Konfigurationen für die PostGRE-SQL Datenbank.
+
+3. **Container bauen und starten**
+    ```
+    docker-compose up --build
+    ```
+
+4. **App im Browser öffnen**  
+   [http://localhost:8501](http://localhost:8501)
+
+**Hinweise:**  
+- Die Datenbank ist persistent (Daten bleiben beim Neustart erhalten).
+- Die Zeitzone ist auf Europe/Berlin eingestellt.
 
 ---
 
-### 3. Plots of Capitals with a time-series analytics
-- shows plots of capitals
-  - can be grouped by timestamp
-    - last 24 hours
-    - last 7 days
-    - last 30 days
-- tool to let the prophet model predict the aqi value of a capital to a specific hour in the future 7 days.
+## Alternativer Start (ohne Docker, nur für Entwicklung)
+
+### Für Linux/macOS
+
+1. **(Optional) Virtuelle Umgebung erstellen**
+    ```
+    python3 -m venv venv
+    source venv/bin/activate
+    ```
+
+2. **Abhängigkeiten installieren**
+    ```
+    pip install -r requirements.txt
+    ```
+
+3. **App starten**
+    ```
+    streamlit run app.py
+    ```
 
 ---
 
-### My Favourite Cities
+### Für Windows
 
-- This page lists all cities saved by the user as favourites.
-- For each saved city, it shows:
-  - The latest AQI value.
-  - The air quality category.
-  - Health advice.
-  - Geographic coordinates.
-- Users can easily remove cities from their favourites list.
+1. **(Optional) Virtuelle Umgebung erstellen**
+    ```
+    python -m venv venv
+    venv\Scripts\activate
+    ```
+
+2. **Abhängigkeiten installieren**
+    ```
+    pip install -r requirements.txt
+    ```
+
+3. **App starten**
+    ```
+    streamlit run app.py
+    ```
 
 ---
 
 ## App Features
 
-- Real-time air quality monitoring (WAQI API)
-- Manual search by city
-- World map with AQI-based coloring
-- Health advice and AQI color legends
-- Favorites saving and management
-- Compare AQI between capitals
-- Interactive Folium maps
-- Modern design with custom CSS
-- PostGre-SQL database with AQI-values of capitals by every 15 minutes
-- Prediction tool to predict AQI-value of a capital
-- Useing prophet model for predictions
+- **Manuelle Suche nach Städten** mit AQI-Anzeige, Gesundheitsratschlägen und Favoritenfunktion
+- **Interaktive Weltkarte** mit AQI-Färbung der Hauptstädte
+- **Zeitreihenplots** für AQI-Daten (24h/7d/30d)
+- **Prognose-Tool:** Vorhersage der AQI-Werte für jede Hauptstadt (bis zu 7 Tage im Voraus, Prophet-Modell)
+- **Favoritenverwaltung**
+- **Persistente Speicherung** der AQI-Daten (PostgreSQL)
+- **Automatische Aktualisierung** der Daten alle 15 Minuten
+- **Modernes Design mit Custom CSS**
+- **Interaktive Folium-Karten**
 
+---
+
+## Bekannte Probleme / FAQ
+
+- **Port 8501 belegt:**  
+  Passe den Port in der `docker-compose.yaml` an.
+- **Docker-Fehler:**  
+  Prüfe, ob Docker und Docker Compose korrekt installiert und gestartet sind.
+- **Keine Daten:**  
+  Die Datenbank wird beim ersten Start automatisch befüllt, dies kann wenige Sekunden dauern.
+
+---
+
+## Links
+
+- **Live-Demo (Streamlit Cloud):**  
+  [https://airaware-dashboard.streamlit.app/](https://airaware-dashboard.streamlit.app/)
+- **GitHub-Projekt:**  
+  [https://github.com/Mikta1998/AirAware](https://github.com/Mikta1998/AirAware)
+
+---
+
+## Kontakt
+
+Bei Fragen oder Problemen gerne ein Issue auf GitHub eröffnen oder eine Mail an [deml20081@hs-ansbach.de] oder [timov...@hs-ansbach.de] schicken.
+
+---
+
+**Viel Spaß mit AirAware!**
