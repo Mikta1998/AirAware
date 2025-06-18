@@ -117,7 +117,7 @@ Die App nutzt Echtzeitdaten der [World Air Quality Index (WAQI)](https://waqi.in
 
 ## Kontakt
 
-Bei Fragen oder Problemen gerne ein Issue auf GitHub eröffnen oder eine Mail an [deml20081@hs-ansbach.de] oder [timov...@hs-ansbach.de] schicken.
+Bei Fragen oder Problemen gerne ein Issue auf GitHub eröffnen oder eine Mail an [deml20081@hs-ansbach.de] oder [timov20168@hs-ansbach.de] schicken.
 
 ---
 
