@@ -33,8 +33,14 @@ Die App nutzt Echtzeitdaten der [World Air Quality Index (WAQI)](https://waqi.in
 4. **App im Browser öffnen**  
    [http://localhost:8501](http://localhost:8501)
 
+### Initiale Datenbefüllung
+
+Beim ersten Start von `docker-compose up --build` wird die PostgreSQL-Datenbank automatisch mit den enthaltenen bereits gesammelten Daten aus `./db/init/backup_utf8.sql` befüllt.
+
+**Wichtig:** Die Datenbank wird nur bei einem komplett frischen Start initialisiert. Wenn das Docker-Volume `airaware_postgres_data` bereits existiert, werden die Daten nicht erneut eingespielt, um Datenverlust zu vermeiden. Dies dient nur als Backup beim ersten build der App, danach werden die aktuellen Daten alle 15 Minuten mit der `scheduler.py` automatisch erfragt, sofern die App aktiv ist.
+
 **Hinweise:**  
-- Die Datenbank ist persistent (Daten bleiben beim Neustart erhalten).
+- Die Datenbank ist persistent (Daten bleiben beim Neustart erhalten).  
 - Die Zeitzone ist auf Europe/Berlin eingestellt.
 
 ---
