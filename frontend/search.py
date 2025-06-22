@@ -45,7 +45,6 @@ def show_search():
     with col_search:
         city = st.text_input("Enter a city name", key="city_search")
 
-    # Ensure favorites are initialized (important for first load)
     if "favorites" not in st.session_state:
         st.session_state.favorites = {}
 
@@ -67,7 +66,7 @@ def show_search():
     label = None
     color = None
     advice = None
-    lat, lon = 20, 0  # Default location
+    lat, lon = 20, 0
 
     if city:
         with st.spinner("Fetching air quality data..."):
@@ -121,20 +120,23 @@ def show_search():
         fig = go.Figure(go.Indicator(
             mode="gauge+number",
             value=aqi if aqi is not None else 0,
-            number={"font": {"size": 42}},
-            title={"text": "Air Quality Index", "font": {"size": 22}},
+            number={
+                "font": {"size": 48, "color": "black"},
+                "valueformat": ".0f"
+            },
+            title={"text": "Air Quality Index", "font": {"size": 22, "color": "black"}},
             gauge={
                 "axis": {
                     "range": [0, 500],
                     "tickwidth": 2,
-                    "tickcolor": "white",
-                    "tickfont": {"size": 16},
+                    "tickcolor": "black",
+                    "tickfont": {"size": 14, "color": "black"},
                     "tickmode": "linear",
                     "tick0": 0,
                     "dtick": 50
                 },
                 "bar": {
-                    "color": color if color else "green",  # Fill gauge bar with AQI color
+                    "color": color if color else "green",
                     "thickness": 0.3
                 },
                 "steps": [
@@ -146,7 +148,7 @@ def show_search():
                     {"range": [301, 500], "color": "maroon"},
                 ],
                 "threshold": {
-                    "line": {"color": "white", "width": 4},
+                    "line": {"color": "black", "width": 4},
                     "thickness": 0.75,
                     "value": aqi if aqi is not None else 0
                 }
@@ -155,10 +157,11 @@ def show_search():
         ))
 
         fig.update_layout(
-            paper_bgcolor="rgba(0,0,0,0)",
-            font={"color": "white"},
+            paper_bgcolor="white",
+            plot_bgcolor="white",
+            font={"color": "black"},
             autosize=True,
-            width=800,
+            width=600,
             height=450,
             margin={"t": 80, "b": 40, "l": 40, "r": 40},
         )
